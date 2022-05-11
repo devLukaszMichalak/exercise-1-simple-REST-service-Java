@@ -14,10 +14,10 @@ public class UserDataService {
     private final DatabaseDataRepository databaseDataRepository;
     private final RestTemplate restTemplate;
 
-    @Transactional//?
-    public List<UserData> getUserData() {
+    //@Transactional//?
+    public List<UserData> getUserData(String newUserLogin) {
 
-        UserData user1 = restTemplate.getForObject("https://api.github.com/users/devLukaszMichalak", UserData.class);
+        UserData user1 = restTemplate.getForObject(("https://api.github.com/users/"+newUserLogin), UserData.class);
         user1.setCalculations((6.0/user1.getFollowing())*(2+user1.getPublic_repos()));
 
         if(databaseDataRepository.existsByLogin(user1.getLogin())){
