@@ -9,15 +9,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DatabaseDataService {
+public class UserDataService {
 
     private final DatabaseDataRepository databaseDataRepository;
     private final RestTemplate restTemplate;
 
     @Transactional//?
-    public List<DatabaseData> getDatabaseData() {
+    public List<UserData> getUserData() {
 
         UserData user1 = restTemplate.getForObject("https://api.github.com/users/devLukaszMichalak", UserData.class);
+        user1.setCalculations((6.0/user1.getFollowing())*(2+user1.getPublic_repos()));
 
         if(databaseDataRepository.existsByLogin(user1.getLogin())){
 
@@ -30,9 +31,7 @@ public class DatabaseDataService {
             databaseDataRepository.save(new DatabaseData(1L,user1.getLogin(),1));
         }
 
-
-
-        return databaseDataRepository.findAll();
+        return List.of(user1);
     }
 
 }

@@ -11,13 +11,13 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/devLukaszMichalak")
 @RequiredArgsConstructor
-public class DatabaseDataController {
+public class UserDataController {
 
-    private final DatabaseDataService databaseDataService;
+    private final UserDataService userDataService;
 
     @GetMapping
-    public List<DatabaseData> DatabaseDataData() {
-        return databaseDataService.getDatabaseData();
+    public List<UserData> userData() {
+        return userDataService.getUserData();
     }
 
 }
