@@ -28,7 +28,7 @@ public class UserDataService {
             databaseDataRepository.save(entryToBeEdited);
 
         }else{
-            databaseDataRepository.save(new DatabaseData(1L,user1.getLogin(),1));
+            databaseDataRepository.save(new DatabaseData(user1.getId(), user1.getLogin(),1));
         }
 
         return List.of(user1);
