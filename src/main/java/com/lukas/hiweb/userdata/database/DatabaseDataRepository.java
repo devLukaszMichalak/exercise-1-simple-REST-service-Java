@@ -1,4 +1,4 @@
-package com.lukas.hiweb.userdata;
+package com.lukas.hiweb.userdata.database;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
