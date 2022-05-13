@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DatabaseRepository extends JpaRepository<Database, Long> {
-    boolean existsByLogin(String login);
     Database findByLogin(String login);
 
 }

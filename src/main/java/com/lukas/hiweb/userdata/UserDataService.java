@@ -32,9 +32,9 @@ public class UserDataService {
                 userData.setCalculations(null);
                 //throw e;
             }
-            incrementRequetConunt(userData.getLogin());
+            incrementRequetCount(userData.getLogin());
         } else {
-            incrementRequetConunt("NOT FOUND");//counting calls for non existing users in database
+            incrementRequetCount("NOT FOUND");//counting calls for non existing users in database
         }
 
         return userData;
@@ -47,7 +47,7 @@ public class UserDataService {
         return (6.0 / userData.getFollowing()) * (2 + userData.getPublic_repos());
     }
 
-    private void incrementRequetConunt(String login) {
+    private void incrementRequetCount(String login) {
         Database entryToBeEdited = databaseRepository.findByLogin(login);
         if (entryToBeEdited != null) {
             int newCount = entryToBeEdited.getRequestCount() + 1;
