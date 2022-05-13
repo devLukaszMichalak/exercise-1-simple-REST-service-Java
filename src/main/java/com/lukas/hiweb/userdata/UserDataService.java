@@ -1,38 +1,62 @@
 package com.lukas.hiweb.userdata;
 
-import com.lukas.hiweb.userdata.database.DatabaseData;
-import com.lukas.hiweb.userdata.database.DatabaseDataRepository;
+import com.lukas.hiweb.userdata.database.Database;
+import com.lukas.hiweb.userdata.database.DatabaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserDataService {
 
-    private final DatabaseDataRepository databaseDataRepository;
+    private final DatabaseRepository databaseRepository;
     private final RestTemplate restTemplate;
 
-    //@Transactional//?
-    public List<UserData> getUserData(String newUserLogin) {
+    public UserData getUserData(String login) {
 
-        UserData user1 = restTemplate.getForObject(("https://api.github.com/users/"+newUserLogin), UserData.class);
-        user1.setCalculations((6.0/user1.getFollowing())*(2+user1.getPublic_repos()));
-
-        if(databaseDataRepository.existsByLogin(user1.getLogin())){
-
-            DatabaseData entryToBeEdited = databaseDataRepository.findByLogin(user1.getLogin());
-            int newCount = entryToBeEdited.getRequest_count()+1;
-            entryToBeEdited.setRequest_count(newCount);
-            databaseDataRepository.save(entryToBeEdited);
-
-        }else{
-            databaseDataRepository.save(new DatabaseData(user1.getId(), user1.getLogin(),1));
+        UserData userData;
+        try {
+            userData = restTemplate.getForObject(("https://api.github.com/users/" + login), UserData.class);
+        } catch (HttpClientErrorException e) {
+            userData = new UserData(login);
+            //throw e;
         }
 
-        return List.of(user1);
+
+        if (userData.getId() != null) {
+            try {
+                userData.setCalculations(performCalculation(userData));
+            } catch (ArithmeticException e) {
+                userData.setCalculations(null);
+                //throw e;
+            }
+            incrementRequetConunt(userData.getLogin());
+        } else {
+            incrementRequetConunt("NOT FOUND");//counting calls for non existing users in database
+        }
+
+        return userData;
+    }
+
+    private double performCalculation(UserData userData) throws ArithmeticException {
+        if (userData.getFollowing() == 0) {
+            throw new ArithmeticException("Calculations cannot be performed - follower number is 0");
+        }
+        return (6.0 / userData.getFollowing()) * (2 + userData.getPublic_repos());
+    }
+
+    private void incrementRequetConunt(String login) {
+        Database entryToBeEdited = databaseRepository.findByLogin(login);
+        if (entryToBeEdited != null) {
+            int newCount = entryToBeEdited.getRequestCount() + 1;
+            entryToBeEdited.setRequestCount(newCount);
+            databaseRepository.save(entryToBeEdited);
+
+        } else {
+            databaseRepository.save(new Database(login, 1));
+        }
     }
 
 }

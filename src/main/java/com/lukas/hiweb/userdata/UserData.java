@@ -1,11 +1,7 @@
 package com.lukas.hiweb.userdata;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-
-import javax.persistence.*;
 
 
 @Data
@@ -21,4 +17,14 @@ public class UserData {
     private String created_at;
     private Double calculations;
 
+    public UserData(String login) {
+        this.id = null;
+        this.login = login;
+        this.name = null;
+        this.avatar_url = null;
+        this.public_repos = null;
+        this.following = null;
+        this.created_at = null;
+        this.calculations = null;
+    }
 }
