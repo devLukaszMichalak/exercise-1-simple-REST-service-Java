@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "git_users")
+@Table(name = "USERS_STATISTICS_DATA")
 public class LoginStatistics {
 
     @Id
