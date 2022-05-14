@@ -1,4 +1,4 @@
-package com.lukas.hiweb.userdata.database;
+package com.lukas.hiweb.user.loginstatistics;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "git_users")
-public class Database {
+public class LoginStatistics {
 
     @Id
     @SequenceGenerator(name = "databasedata_sequence", sequenceName = "databasedata_sequence", allocationSize = 1)
@@ -26,7 +26,7 @@ public class Database {
     @Column(name = "request_count", nullable = false)
     private Integer requestCount;
 
-    public Database(String login, Integer requestCount) {
+    public LoginStatistics(String login, Integer requestCount) {
         this.login = login;
         this.requestCount = requestCount;
     }

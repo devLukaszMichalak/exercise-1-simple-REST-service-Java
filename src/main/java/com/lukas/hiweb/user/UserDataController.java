@@ -1,4 +1,4 @@
-package com.lukas.hiweb.userdata;
+package com.lukas.hiweb.user;
 
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public class UserDataController {
     private final UserDataService userDataService;
 
     @GetMapping(path = "{newUserLogin}")
-    public UserData userData(@PathVariable("newUserLogin") String newUserLogin) {
+    public UserData getUserData(@PathVariable("newUserLogin") String newUserLogin) {
         return userDataService.getUserData(newUserLogin);
     }
 
