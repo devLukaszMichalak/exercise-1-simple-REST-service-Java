@@ -40,7 +40,7 @@ public class UserDataService {
         if (userData.getFollowers() == 0) {
             throw new DivideByZeroException();
         }
-        return (6.0 / userData.getFollowers()) * (2 + userData.getPublic_repos());
+        return (6.0 / userData.getFollowers()) * (2 + userData.getPublicRepos());
     }
 
     private void incrementRequetCount(String login) {
