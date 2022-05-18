@@ -18,6 +18,7 @@ public class LoginStatistics {
     @Column(name = "id", updatable = false)
     private Long id;
 
+    @Getter
     @Column(name = "login", nullable = false, columnDefinition = "TEXT")
     private String login;
 
