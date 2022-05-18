@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class LoginStatisticsRepositoryTest {
 
@@ -18,7 +16,7 @@ class LoginStatisticsRepositoryTest {
         //given
         String testUser = "Tester";
         Integer testUserRequestCount = 2;
-        LoginStatistics testUserLoginStatistics = new LoginStatistics(testUser,testUserRequestCount);
+        LoginStatistics testUserLoginStatistics = new LoginStatistics(testUser, testUserRequestCount);
         loginStatisticsRepository.save(testUserLoginStatistics);
 
         //when
